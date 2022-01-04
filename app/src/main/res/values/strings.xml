@@ -39,4 +39,5 @@
         WorkManager Demo -> App Permissions and grant access to Storage.</string>
     <string name="blurring_image">Blurring image</string>
     <string name="output_is">Output is %s</string>
+    <string name="cleaning_up">Cleaning up old temporary files</string>
 </resources>
