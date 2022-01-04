@@ -37,4 +37,6 @@
     <!-- Messages -->
     <string name="set_permissions_in_settings">Go to Settings -> Apps and Notifications ->
         WorkManager Demo -> App Permissions and grant access to Storage.</string>
+    <string name="blurring_image">Blurring image</string>
+    <string name="output_is">Output is %s</string>
 </resources>
