@@ -20,6 +20,7 @@ class BlurWorker(context: Context, params: WorkerParameters) : Worker(context, p
         val appContext = applicationContext
         val resourceUri = inputData.getString(KEY_IMAGE_URI)
         makeStatusNotification(appContext.getString(R.string.blurring_image), appContext)
+        sleep()
 
         return try {
             if (TextUtils.isEmpty(resourceUri)) {
@@ -37,7 +38,6 @@ class BlurWorker(context: Context, params: WorkerParameters) : Worker(context, p
                 )
             val blurredPicture = blurBitmap(picture, appContext)
             val outputUri = writeBitmapToFile(appContext, blurredPicture)
-            makeStatusNotification(appContext.getString(R.string.output_is, outputUri), appContext)
 
             Result.success(workDataOf(KEY_IMAGE_URI to outputUri.toString()))
         } catch (e: Throwable) {
