@@ -46,10 +46,13 @@ class BlurViewModel(application: Application) : ViewModel() {
      * @param blurLevel The amount to blur the image
      */
     internal fun applyBlur(blurLevel: Int) {
+        val constraints = Constraints.Builder().setRequiresCharging(true).build()
+
         val cleanupWorkerRequest = OneTimeWorkRequest.from(CleanupWorker::class.java)
-        val saveImageWorkerRequest = OneTimeWorkRequestBuilder<SaveImageToFileWorker>().addTag(
-            TAG_OUTPUT
-        ).build()
+        val saveImageWorkerRequest = OneTimeWorkRequestBuilder<SaveImageToFileWorker>()
+            .addTag(TAG_OUTPUT)
+            .setConstraints(constraints)
+            .build()
         var continuation = workManager.beginUniqueWork(
             IMAGE_MANIPULATION_WORK_NAME,
             ExistingWorkPolicy.REPLACE,
