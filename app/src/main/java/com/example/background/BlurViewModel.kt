@@ -68,6 +68,10 @@ class BlurViewModel(application: Application) : ViewModel() {
         continuation.enqueue()
     }
 
+    internal fun cancelWork() {
+        workManager.cancelUniqueWork(IMAGE_MANIPULATION_WORK_NAME)
+    }
+
     private fun createInputDataForUri() =
         Data.Builder().apply {
             imageUri?.let {
