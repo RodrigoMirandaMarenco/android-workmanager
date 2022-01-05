@@ -115,7 +115,10 @@ class BlurActivity : AppCompatActivity() {
      */
     private fun showWorkFinished() {
         with(binding) {
-            progressBar.visibility = View.GONE
+            progressBar.apply {
+                visibility = View.GONE
+                progress = 0
+            }
             cancelButton.visibility = View.GONE
             goButton.visibility = View.VISIBLE
         }
