@@ -1,12 +1,10 @@
 package com.example.background.workers
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.net.Uri
 import com.example.background.OUTPUT_PATH
-import java.io.BufferedInputStream
-import java.io.BufferedOutputStream
-import java.io.File
-import java.io.FileOutputStream
+import java.io.*
 import java.util.*
 
 /**
@@ -34,3 +32,17 @@ fun copyFileFromTestToTargetCtx(testCtx: Context, targetCtx: Context, fileName: 
     return Uri.fromFile(outputFile)
 }
 
+fun uriFileExists(targetCtx: Context, uri: String?): Boolean {
+    if (uri.isNullOrEmpty()) {
+        return false
+    }
+
+    val resolver = targetCtx.contentResolver
+
+    return try {
+        BitmapFactory.decodeStream(resolver.openInputStream(Uri.parse(uri)))
+        true
+    } catch (ex: FileNotFoundException) {
+        false
+    }
+}
