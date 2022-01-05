@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.work.WorkInfo
+import androidx.work.WorkInfo.State.RUNNING
 import com.bumptech.glide.Glide
 import com.example.background.databinding.ActivityBlurBinding
 
@@ -62,6 +63,21 @@ class BlurActivity : AppCompatActivity() {
         binding.cancelButton.setOnClickListener { viewModel.cancelWork() }
 
         viewModel.outputWorkInfos.observe(this, workInfosObserver())
+
+        viewModel.progressWorkInfoItems.observe(this, progressObserver())
+    }
+
+    private fun progressObserver() = Observer<List<WorkInfo>> { listOfWorkInfo ->
+        if (listOfWorkInfo.isNullOrEmpty()) {
+            return@Observer
+        }
+
+        listOfWorkInfo.forEach { workInfo ->
+            if (workInfo.state == RUNNING) {
+                val progress = workInfo.progress.getInt(PROGRESS, 0)
+                binding.progressBar.progress = progress
+            }
+        }
     }
 
     private fun workInfosObserver(): Observer<List<WorkInfo>> {
